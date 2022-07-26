@@ -6,12 +6,13 @@ import { useAuthValue } from '../context/AuthContext'
 
 import styles from './Navbar.module.css'
 
-export const Navbar = () => {
+const Navbar = () => {
   const user = useAuthValue()
+  const { logout } = useAuthentication()
 
   return (
     <nav className={styles.navbar}>
-      <NavLink to="/" className={styles.brand}>
+      <NavLink className={styles.brand} to="/">
         Mini <span>Blog</span>
       </NavLink>
       <ul className={styles.links_list}>
@@ -38,7 +39,7 @@ export const Navbar = () => {
                 to="/register"
                 className={({ isActive }) => (isActive ? styles.active : '')}
               >
-                Registrar
+                Cadastrar
               </NavLink>
             </li>
           </>
@@ -71,7 +72,14 @@ export const Navbar = () => {
             Sobre
           </NavLink>
         </li>
+        {user && (
+          <li>
+            <button onClick={logout}>Sair</button>
+          </li>
+        )}
       </ul>
     </nav>
   )
 }
+
+export default Navbar
